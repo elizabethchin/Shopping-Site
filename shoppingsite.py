@@ -88,7 +88,6 @@ def show_shopping_cart():
 
     return render_template("cart.html")
 
-
 @app.route("/add_to_cart/<melon_id>")
 def add_to_cart(melon_id):
     """Add a melon to cart and redirect to shopping cart page.
