@@ -6,12 +6,13 @@ put melons in a shopping cart.
 Authors: Joel Burton, Christian Fernandez, Meggie Mahnken, Katie Byers.
 """
 
-from flask import Flask, render_template, redirect, flash
+from flask import Flask, render_template, redirect, flash, session
 import jinja2
 
 import melons
 
 app = Flask(__name__)
+app.secret_key = "EliandMeliarethebestsoftwareengineers"
 
 # A secret key is needed to use Flask sessioning features
 
@@ -75,6 +76,15 @@ def show_shopping_cart():
     #
     # Make sure your function can also handle the case wherein no cart has
     # been added to the session
+    session["cart"] = {}
+    our_cart = session["cart"]
+    melons = []
+    total_cost = 
+    melon = melons.get_by_id(melon_id)
+    print (our_cart)
+
+    return render_template("melon_details.html",
+                           display_melon=melon)
 
     return render_template("cart.html")
 
