@@ -72,10 +72,10 @@ def show_shopping_cart():
     # - pass the total order cost and the list of Melon objects to the template
     # Make sure your function can also handle the case wherein no cart has
     # been added to the session
-    # total_cost =
+    # total_cost = 0
     # cart = session.get("cart", {})
     # melons = []
-    # order_cost = 0
+    # melon_cost = 0
     # for melon_id, num_melons in cart:
     #     melon = melons.get_by_id(melon_id)
     #     melon_cost = melon.price * num_melons
@@ -83,7 +83,13 @@ def show_shopping_cart():
 
     # print (our_cart)
 
-    # return render_template("cart.html")
+    # return render_template("cart.html",
+    #                         Melon_name = melon,
+    #                         Quantity = num_melons
+    #                         Price = melon.price
+    #                         total = order_cost
+    #                         total_price = total_cost)
+#last here
 
 
 @app.route("/add_to_cart/<melon_id>")
