@@ -12,8 +12,6 @@ import jinja2
 import melons
 
 app = Flask(__name__)
-app.secret_key = "EliandMeliarethebestsoftwareengineers"
-
 # A secret key is needed to use Flask sessioning features
 
 app.secret_key = 'this-should-be-something-unguessable'
@@ -62,7 +60,6 @@ def show_shopping_cart():
     # TODO: Display the contents of the shopping cart.
 
     # The logic here will be something like:
-    #
     # - get the cart dictionary from the session
     # - create a list to hold melon objects and a variable to hold the total
     #   cost of the order
@@ -73,20 +70,22 @@ def show_shopping_cart():
     #    - add quantity and total cost as attributes on the Melon object
     #    - add the Melon object to the list created above
     # - pass the total order cost and the list of Melon objects to the template
-    #
     # Make sure your function can also handle the case wherein no cart has
     # been added to the session
-    session["cart"] = {}
-    our_cart = session["cart"]
-    melons = []
-    total_cost = 
-    melon = melons.get_by_id(melon_id)
-    print (our_cart)
+    # total_cost =
+    # cart = session.get("cart", {})
+    # melons = []
+    # order_cost = 0
+    # for melon_id, num_melons in cart:
+    #     melon = melons.get_by_id(melon_id)
+    #     melon_cost = melon.price * num_melons
+    #     order_cost += melon_cost
 
-    return render_template("melon_details.html",
-                           display_melon=melon)
 
-    return render_template("cart.html")
+    # print (our_cart)
+
+    # return render_template("cart.html")
+
 
 @app.route("/add_to_cart/<melon_id>")
 def add_to_cart(melon_id):
@@ -106,8 +105,21 @@ def add_to_cart(melon_id):
     # - increment the count for that melon id by 1
     # - flash a success message
     # - redirect the user to the cart page
+    cart = session.get("cart", False)
 
-    return "Oops! This needs to be implemented!"
+    if not cart:
+        session["cart"] = {}
+        cart = session.get("cart")
+
+    print('this is the cart', session)
+    if melon_id in cart.keys():
+        cart[melon_id] += 1
+    else:
+        cart[melon_id] = 1
+    flash("Melon successfully added to cart!")
+    print('this is the cart', session)
+
+    return render_template("cart.html")
 
 
 @app.route("/login", methods=["GET"])
