@@ -81,7 +81,6 @@ def show_shopping_cart():
     #     melon_cost = melon.price * num_melons
     #     order_cost += melon_cost
 
-
     # print (our_cart)
 
     # return render_template("cart.html")
