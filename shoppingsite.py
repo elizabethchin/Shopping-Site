@@ -7,6 +7,7 @@ Authors: Joel Burton, Christian Fernandez, Meggie Mahnken, Katie Byers.
 """
 
 from flask import Flask, render_template, redirect, flash, session
+
 import jinja2
 
 import melons
@@ -37,7 +38,7 @@ def list_melons():
 
     melon_list = melons.get_all()
     return render_template("all_melons.html",
-                           melon_list=melon_list)
+                           melon_list=melon_list) 
 
 
 @app.route("/melon/<melon_id>")
@@ -50,7 +51,7 @@ def show_melon(melon_id):
     melon = melons.get_by_id(melon_id)
     print(melon)
     return render_template("melon_details.html",
-                           display_melon=melon)
+                           display_melon=melon)#html file var for melon is display_melon
 
 
 @app.route("/cart")
@@ -72,24 +73,24 @@ def show_shopping_cart():
     # - pass the total order cost and the list of Melon objects to the template
     # Make sure your function can also handle the case wherein no cart has
     # been added to the session
-    # total_cost = 0
-    # cart = session.get("cart", {})
-    # melons = []
-    # melon_cost = 0
-    # for melon_id, num_melons in cart:
-    #     melon = melons.get_by_id(melon_id)
-    #     melon_cost = melon.price * num_melons
-    #     order_cost += melon_cost
+    total_cost = 0
+    cart = session.get("cart", {})
+    melons = []
+    melon_cost = 0
+    for melon_id, num_melons in cart:
+        melon = melons.get_by_id(melon_id)
+        melon_cost = melon.price * num_melons
+        order_cost += melon_cost
 
-    # print (our_cart)
+    print (our_cart)
 
-    # return render_template("cart.html",
-    #                         Melon_name = melon,
-    #                         Quantity = num_melons
-    #                         Price = melon.price
-    #                         total = order_cost
-    #                         total_price = total_cost)
-#last here
+    return render_template("cart.html",
+                            Melon_name = melon,
+                            Quantity = num_melons
+                            Price = melon.price
+                            total = order_cost
+                            total_price = total_cost)
+
 
 
 @app.route("/add_to_cart/<melon_id>")
