@@ -28,9 +28,7 @@ app.jinja_env.undefined = jinja2.StrictUndefined
 @app.route("/")
 def index():
     """Return homepage."""
-
     return render_template("homepage.html")
-
 
 @app.route("/melons")
 def list_melons():
@@ -49,7 +47,6 @@ def show_melon(melon_id):
     """
 
     melon = melons.get_by_id(melon_id)
-    print(melon)
     return render_template("melon_details.html",
                            display_melon=melon)#html file var for melon is display_melon
 
@@ -73,14 +70,18 @@ def show_shopping_cart():
     # - pass the total order cost and the list of Melon objects to the template
     # Make sure your function can also handle the case wherein no cart has
     # been added to the session
-    total_cost = 0
+    
     cart = session.get("cart", {})
     melons = []
+    total_order_cost = 0
     melon_cost = 0
-    for melon_id, num_melons in cart:
+    for melon_id, num_melons in cart.items():
         melon = melons.get_by_id(melon_id)
         melon_cost = melon.price * num_melons
         order_cost += melon_cost
+        melon.quantity = num_melons
+        melon.total_cost = total_order_cost
+        melons.append(melon)
 
     print (our_cart)
 
@@ -125,7 +126,7 @@ def add_to_cart(melon_id):
     flash("Melon successfully added to cart!")
     print('this is the cart', session)
 
-    return render_template("cart.html")
+    return redirect("/cart")
 
 
 @app.route("/login", methods=["GET"])
